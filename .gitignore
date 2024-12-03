@@ -23,3 +23,7 @@ go.work.sum
 
 # env file
 .env
+
+# dont upload inputs or questions
+**/*.txt
+.idea
