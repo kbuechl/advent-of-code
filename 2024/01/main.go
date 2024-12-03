@@ -17,7 +17,7 @@ func main() {
 
 	defer file.Close()
 	s := bufio.NewScanner(file)
-	fmt.Println(part1(s))
+	fmt.Printf("part 1: %d\n", part1(s))
 
 	//reset file from earlier search
 	if _, err = file.Seek(0, 0); err != nil {
@@ -25,10 +25,10 @@ func main() {
 	}
 
 	s2 := bufio.NewScanner(file)
-	fmt.Println(part2(s2))
+	fmt.Printf("part 2:%d\n", part2(s2))
 }
 
-func part1(scanner *bufio.Scanner) string {
+func part1(scanner *bufio.Scanner) int {
 	lHeap := &minHeap{}
 	rHeap := &minHeap{}
 
@@ -54,10 +54,10 @@ func part1(scanner *bufio.Scanner) string {
 		dist += distance(l, r)
 	}
 
-	return strconv.Itoa(dist)
+	return dist
 }
 
-func part2(scanner *bufio.Scanner) string {
+func part2(scanner *bufio.Scanner) int {
 	count := make(map[int]int)
 	items := make([]int, 0)
 
@@ -73,7 +73,7 @@ func part2(scanner *bufio.Scanner) string {
 		score += n * count[n]
 	}
 
-	return strconv.Itoa(score)
+	return score
 }
 
 func distance(i1, i2 int) int {

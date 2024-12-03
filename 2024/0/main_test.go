@@ -11,16 +11,14 @@ import (
 func TestSolution(t *testing.T) {
 	file, err := os.Open("example.txt")
 	require.NoError(t, err)
-
 	defer file.Close()
-
 	s := bufio.NewScanner(file)
 
 	t.Run("part one", func(t *testing.T) {
-		assert.Equal(t, "", part1(s))
+		assert.Equal(t, 0, part1(s))
 	})
 
 	t.Run("part two", func(t *testing.T) {
-		assert.Equal(t, "", part2(s))
+		assert.Equal(t, 0, part2(s))
 	})
 }

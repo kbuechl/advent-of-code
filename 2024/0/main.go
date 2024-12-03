@@ -14,6 +14,7 @@ func main() {
 
 	defer file.Close()
 	s := bufio.NewScanner(file)
+	fmt.Printf("part 1: %d\n", part1(s))
 	fmt.Println(part1(s))
 
 	//reset file from earlier search
@@ -22,13 +23,13 @@ func main() {
 	}
 
 	s2 := bufio.NewScanner(file)
-	fmt.Println(part2(s2))
+	fmt.Printf("part 2: %d\n", part2(s2))
 }
 
-func part1(scanner *bufio.Scanner) string {
-	panic("not implemented")
+func part1(scanner *bufio.Scanner) int {
+	return -1
 }
 
-func part2(scanner *bufio.Scanner) string {
-	panic("not implemented")
+func part2(scanner *bufio.Scanner) int {
+	return -1
 }
