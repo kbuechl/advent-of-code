@@ -15,7 +15,6 @@ func main() {
 	defer file.Close()
 	s := bufio.NewScanner(file)
 	fmt.Printf("part 1: %d\n", part1(s))
-	fmt.Println(part1(s))
 
 	//reset file from earlier search
 	if _, err = file.Seek(0, 0); err != nil {
