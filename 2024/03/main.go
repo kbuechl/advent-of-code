@@ -8,10 +8,13 @@ import (
 	"strconv"
 )
 
-var validInput *regexp.Regexp
+var (
+	validInput   = regexp.MustCompile(`mul\((\d{1,3}),(\d{1,3})\)`)
+	disableRegex = regexp.MustCompile(`don't\(\).*?do\(\)`)
+)
 
 func init() {
-	validInput = regexp.MustCompile(`mul\((\d{1,3}),(\d{1,3})\)`)
+
 }
 func main() {
 	file, err := os.Open("input.txt")
@@ -53,55 +56,22 @@ func calculateMatches(text string) int {
 		if len(match) != 3 {
 			panic("match length does not meet criteria")
 		}
-		x, err := strconv.Atoi(match[1])
-		if err != nil {
-			panic(err)
-		}
-		y, err := strconv.Atoi(match[2])
-		if err != nil {
-			panic(err)
-		}
+		x, _ := strconv.Atoi(match[1])
+		y, _ := strconv.Atoi(match[2])
 		res += x * y
 	}
 	return res
 }
-func part2(scanner *bufio.Scanner) int {
-	re := regexp.MustCompile(`don't\([^\)]*\)(.*?do\([^\)]*\))?`)
-	ans := 0
-	for scanner.Scan() {
-		text := scanner.Text()
-		text = re.ReplaceAllString(text, "")
 
-		ans += calculateMatches(text)
+func part2(scanner *bufio.Scanner) int {
+	s := ""
+
+	for scanner.Scan() {
+		s += scanner.Text()
 	}
 
-	return ans
+	s = disableRegex.ReplaceAllString(s, "")
+	//todo: get better at regex and catch the edge case
+	s = regexp.MustCompile(`don't\(\).*`).ReplaceAllString(s, "")
+	return calculateMatches(s)
 }
-
-//func oldpart2(scanner *bufio.Scanner) int {
-//	//anything between dont and do can be thrown out
-//
-//	reDont := regexp.MustCompile(`don't\(\)`)
-//	reDo := regexp.MustCompile(`do\(\)`)
-//
-//	for scanner.Scan() {
-//
-//	}
-//	text := scanner.Text()
-//	for {
-//		idx := reDont.FindStringIndex(text)
-//		id2 := reDo.FindStringIndex(text)
-//		if idx == nil {
-//
-//			break
-//		}
-//		start := idx[0]
-//		stop := len(text) - 1
-//		if id2 != nil {
-//			stop = id2[1]
-//		}
-//		text = text[:start-1] + text[stop+1:]
-//	}
-//
-//	return calculateMatches(text)
-//}
