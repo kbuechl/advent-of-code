@@ -62,23 +62,23 @@ func (r report) isLevelSafe(i, j int) bool {
 	}
 }
 
-func (r report) dampen() bool {
-	//find first not safe and remove it
-	safe := r
-	for i := 0; i < len(r)-1; i++ {
-		if !r.isLevelSafe(i, i+1) {
-			if len(r) > i+2 && r.isLevelSafe(i, i+2) {
-				safe = r.remove(i + 1)
-			} else {
-				safe = r.remove(i)
-			}
-			break
+func (r report) dampen() report {
+	//remove each element until we find a safe one
+	for i := 0; i < len(r); i++ {
+		temp := make(report, len(r))
+		copy(temp, r)
+		temp = append(temp[:i], temp[i+1:]...)
+
+		if temp.isSafe() {
+			return temp
 		}
 	}
-
-	return safe.isSafe()
+	return r
 }
 
 func (r report) remove(idx int) report {
-	return append(r[:idx], r[idx+1:]...)
+	newSlice := make(report, 0, len(r))
+	newSlice = append(newSlice, r[:idx]...)
+	newSlice = append(newSlice, r[idx+1:]...)
+	return newSlice
 }
